@@ -1,6 +1,5 @@
 # AgriTrust Connect 🌱
 
-![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Salesforce DX](https://img.shields.io/badge/Built%20with-Salesforce%20DX-orange.svg)
 ![Status: In Development](https://img.shields.io/badge/Status-In%20Development-green.svg)
 ![TCS SmartBridge](https://img.shields.io/badge/Program-TCS%20SmartBridge-blueviolet)
