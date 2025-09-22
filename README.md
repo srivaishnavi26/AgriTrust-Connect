@@ -102,3 +102,73 @@ This project is being developed as part of the **TCS SmartBridge** program. It s
 
 
 
+## Phase 2: Org Setup & Configuration – AgriTrust Connect
+
+This section captures all configuration and org setup tasks completed under Phase 2.
+
+---
+
+### Salesforce Dev Org Setup & Connection
+
+- Developer Edition org created, user credentials confirmed  
+- VS Code + Salesforce CLI (SFDX) setup, repo connected to the org
+
+---
+
+### Company Profile & Organization Settings
+
+- Company Name: AgriTrust Connect Pvt. Ltd  
+- Default Locale: English (India)  
+- Default Time Zone: (GMT+05:30) IST  
+- Currency: INR  
+
+---
+
+### Business Hours & Holidays
+
+- Business Hours: Mon-Sat, 9:00 AM – 6:00 PM  
+- Holidays configured: (list the holidays you added, e.g. Diwali, Independence Day, Pongal, etc.)
+
+---
+
+### Fiscal Year
+
+- Standard Fiscal Year used  
+- Fiscal Year start month: April  
+
+---
+
+### Users & Licenses
+
+- Admin User created  
+- Farmer user created  
+- Extension Officer user created  
+- Buyer user created  
+
+---
+
+### Roles, Profiles & Permission Sets
+
+- Roles established: Admin, Farmer, Extension Officer, Supplier, Buyer, Government Officer  
+- Profiles created: Admin profile (full access), Farmer profile, Extension Officer profile, Buyer profile, Supplier profile  
+- Permission Sets added: “Weather Data Access”, “Financial Data Access”  
+
+---
+
+### Security & Access
+
+- Org-Wide Defaults (OWD) set: Farmer records private; Crop/Advisory records (as per parent or restricted)  
+- Sharing rules configured: Farmer records shared with their assigned Extension Officer  
+- Login / password policies: Admin login access, field-level security set for sensitive fields  
+
+---
+
+### Dev & Deployment Basics
+
+- Org used for both development & testing (no separate sandbox)  
+- Version control: Setup via GitHub repo  
+- Metadata deployments handled through VS Code + SFDX commands  
+
+---
+- ___  
+
