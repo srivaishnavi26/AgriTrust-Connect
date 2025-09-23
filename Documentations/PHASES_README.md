@@ -1,6 +1,6 @@
 # AgriTrust Connect - Complete Project Documentation  
 
-This document provides a complete overview of the AgriTrust Connect project, from its initial problem analysis in Phase 1 to the detailed org setup in Phase 2.  
+This document provides a complete overview of the AgriTrust Connect project, from its initial problem analysis in Phase 1, the detailed org setup in Phase 2 and data modelling & relationshios in Phase 3.  
 
 ---
 
@@ -19,7 +19,12 @@ This document provides a complete overview of the AgriTrust Connect project, fro
    * [User, Role, & Profile Setup](#3-user-role--profile-setup)  
    * [Security & Sharing Model](#4-security--sharing-model)  
 
-3. **[Phase 3: Data Modeling & Relationships (Coming Soon)](#phase-3-data-modeling--relationships-coming-soon)**  
+3. **[Phase 3: Data Modeling & Relationships (Coming Soon)](#phase-3-data-modeling--relationships)**  
+   * [Object Model Design](#1-object-model-design)  
+   * [Relationships Defined](#2-relationships-defined) 
+   * [Page Layouts & Record Types](#3-page-layouts--record-types) 
+   * [Compact Layouts](#4-compact-layouts)   
+   * [Schema Builder Visualization](#5-schema-builder-visualization)
 
 ---
 
@@ -229,11 +234,126 @@ Compact layouts were set up to improve mobile user experience:
 ### 5. Schema Builder Visualization  
 
 The object model and relationships were mapped in **Salesforce Schema Builder**.  
-This provided a visual confirmation of the data model and will serve as a reference for future phases.  
-
-*(Screenshots will be added here)*  
+This provided a visual confirmation of the data model and will serve as a reference for future phases.   
 
 ---
 
 **Phase 3 Completion Status: DONE**  
- Ready to proceed with **Phase 4: Process Automation**  
+
+## Phase 4: Process Automation (Admin)
+
+This phase focuses on automating business processes in AgriTrust Connect using **Validation Rules, Workflow Rules, Process Builder, Approval Processes, and Flows**. Automation reduces manual effort, ensures data accuracy, and provides timely notifications to stakeholders.
+
+### 1. Validation Rules
+
+Validation rules enforce data integrity and prevent incorrect entries. Examples implemented include:
+
+| # | Rule Name | Object | Formula | Error Message |
+|---|-----------|--------|---------|---------------|
+| 1 | Crop Cycle Dates | Crop_Cycle__c | `End_Date__c < Start_Date__c` | End date cannot be before start date. |
+| 2 | Soil Moisture Range | Crop_Cycle__c | `Moisture__c < 0 || Moisture__c > 100` | Moisture must be between 0 and 100. |
+| 3 | Soil pH Range | Crop_Cycle__c | `pH__c < 0 || pH__c > 14` | pH value must be between 0 and 14. |
+| 4 | Mandatory Crop Type | Crop_Cycle__c | `ISBLANK(Crop_Type__c)` | Crop type is required. |
+| 5 | Buyer Order Quantity | Procurement__c | `Order_Qty__c <= 0` | Order quantity must be greater than zero. |
+| 6 | Buyer Order Price Check | Procurement__c | `Price__c <= 0` | Price must be greater than zero. |
+| 7 | Farmer Phone Number | Contact / Farmer__c | `NOT(REGEX(Phone__c, "^[0-9]{10}$"))` | Enter a valid 10-digit phone number. |
+
+> **Note:** Validation rules were implemented incrementally, starting with key fields and gradually covering all critical data points.
+
+---
+
+### 2. Workflow Rule
+
+**Purpose:** Notify farmers automatically when a new advisory is created.
+
+* **Object:** Advisory__c  
+* **Rule Name:** Notify_Farmer_On_Advisory  
+* **Evaluation Criteria:** Created  
+* **Action:** Email Alert  
+  * **Recipient:** Related_Farmer__c  
+  * **Email Template Example:**
+
+```
+
+Hello {!\$Record.Related\_Farmer\_\_c.Name},
+
+A new advisory has been created for your crop submission.
+
+Advisory Name: {!\$Record.Name}
+Date: {!\$Record.Advisory\_Date\_\_c}
+Message: {!\$Record.Advisory\_Text\_\_c}
+
+Please review and follow the instructions.
+
+Thanks,
+AgriTrust Connect
+
+```
+
+---
+
+### 3. Process Builder
+
+**Purpose:** Automatically create follow-up tasks whenever a harvest date is logged.
+
+* **Object:** Crop_Cycle__c  
+* **Criteria:** Harvest_Date__c is changed AND is not null  
+* **Action:** Create Task  
+  * Subject: `"Harvest Logged – Follow Up"`  
+  * Assigned To: Owner / Agronomist  
+  * Due Date: Harvest_Date__c  
+  * Related To: Crop_Cycle__c record  
+
+---
+
+### 4. Approval Process
+
+**Purpose:** Ensure procurement requests are reviewed by an Agronomist before approval.
+
+* **Object:** Procurement__c  
+* **Approval Process Name:** Buyer_Request_Approval  
+* **Entry Criteria:** Status__c = "Submitted"  
+* **Steps:**  
+  1. Submission routed to Agronomist for approval  
+  2. Approved → Update record and notify buyer  
+  3. Rejected → Update record and notify buyer  
+
+---
+
+### 5. Flow Automations
+
+#### Flow 1 – Procurement → Traceability Ledger
+
+* **Trigger:** Record-created on Procurement__c  
+* **Action:** Create Traceability_Ledger__c record  
+* **Field Mapping:**  
+  * Related Procurement = {!$Record.Id}  
+  * Stage = "Created"  
+  * Movement Date = {!$Flow.CurrentDateTime}  
+
+#### Flow 2 – Crop_Cycle → Advisory
+
+* **Trigger:** Record-created on Crop_Cycle__c  
+* **Decision:** Crop type = Paddy (extendable for other crops)  
+* **Action:** Create Advisory__c record  
+* **Field Mapping:**  
+  * Advisory Name = `"Advisory for " & {!$Record.Name}`  
+  * Advisory Date = {!$Flow.CurrentDate}  
+  * Advisory Text = `"Please follow best practices for " & {!$Record.Crop_Name__c}`  
+  * Related Farmer = {!$Record.Related_Farm__c}  
+  * Owner / Office User = Assign to Agronomist  
+
+---
+
+### 6. Phase 4 Outcome
+
+* Validation rules ensure **data integrity**  
+* Farmers receive **automated notifications** via Workflow Rule  
+* Harvest follow-up **tasks are auto-created** via Process Builder  
+* Procurement approvals are **managed systematically** via Approval Process  
+* Traceability Ledger and advisories are **automatically generated** via Flows  
+
+**Phase 4 is complete** and ready for integration with subsequent phases of the project.
+```
+
+---
