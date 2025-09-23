@@ -6,7 +6,7 @@
 
 A Salesforce-powered ecosystem digitizing the agricultural value chain for transparency, sustainability, and profitability. This platform connects smallholder farmers, agronomists, and corporate buyers to build a more efficient and equitable food system.
 
-For detailed technical documentation, please see the `/documentation` folder.
+For detailed technical documentation, please see the `/Documentations` folder.
 
 ---
 
