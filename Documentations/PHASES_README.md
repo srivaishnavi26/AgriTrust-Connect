@@ -21,10 +21,10 @@ This document provides a complete overview of the AgriTrust Connect project, fro
 
 3. **[Phase 3: Data Modeling & Relationships (Coming Soon)](#phase-3-data-modeling--relationships)**  
    * [Object Model Design](#1-object-model-design)  
-   * [Relationships Defined](#2-relationships-defined) – Lookup, Master-Detail, and cross-object links  
-   * [Page Layouts & Record Types](#3-page-layouts--record-types) – Role-specific layouts and multiple processes  
-   * [Compact Layouts](#4-compact-layouts) – Optimized views for mobile users  
-   * [Schema Builder Visualization](#5-schema-builder-visualization) – Diagram of the full data model  
+   * [Relationships Defined](#2-relationships-defined) 
+   * [Page Layouts & Record Types](#3-page-layouts--record-types) 
+   * [Compact Layouts](#4-compact-layouts)   
+   * [Schema Builder Visualization](#5-schema-builder-visualization)
 
 ---
 
