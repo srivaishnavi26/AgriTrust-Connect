@@ -1,6 +1,6 @@
 # AgriTrust Connect - Complete Project Documentation  
 
-This document provides a complete overview of the AgriTrust Connect project, from its initial problem analysis in Phase 1 to the detailed org setup in Phase 2.  
+This document provides a complete overview of the AgriTrust Connect project, from its initial problem analysis in Phase 1, the detailed org setup in Phase 2 and data modelling & relationshios in Phase 3.  
 
 ---
 
@@ -19,7 +19,12 @@ This document provides a complete overview of the AgriTrust Connect project, fro
    * [User, Role, & Profile Setup](#3-user-role--profile-setup)  
    * [Security & Sharing Model](#4-security--sharing-model)  
 
-3. **[Phase 3: Data Modeling & Relationships (Coming Soon)](#phase-3-data-modeling--relationships-coming-soon)**  
+3. **[Phase 3: Data Modeling & Relationships (Coming Soon)](#phase-3-data-modeling--relationships)**  
+   * [Object Model Design](#1-object-model-design)  
+   * [Relationships Defined](#2-relationships-defined) – Lookup, Master-Detail, and cross-object links  
+   * [Page Layouts & Record Types](#3-page-layouts--record-types) – Role-specific layouts and multiple processes  
+   * [Compact Layouts](#4-compact-layouts) – Optimized views for mobile users  
+   * [Schema Builder Visualization](#5-schema-builder-visualization) – Diagram of the full data model  
 
 ---
 
@@ -229,9 +234,7 @@ Compact layouts were set up to improve mobile user experience:
 ### 5. Schema Builder Visualization  
 
 The object model and relationships were mapped in **Salesforce Schema Builder**.  
-This provided a visual confirmation of the data model and will serve as a reference for future phases.  
-
-*(Screenshots will be added here)*  
+This provided a visual confirmation of the data model and will serve as a reference for future phases.   
 
 ---
 
