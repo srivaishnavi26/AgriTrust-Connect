@@ -25,7 +25,8 @@ This document provides a complete overview of the AgriTrust Connect project, fro
    * [Page Layouts & Record Types](#3-page-layouts--record-types) 
    * [Compact Layouts](#4-compact-layouts)   
    * [Schema Builder Visualization](#5-schema-builder-visualization)
-
+4. **[Phase 4: Process Automation (Admin)](#phase-4-process-automation-admin)**   
+    *This phase focuses on automating business processes in AgriTrust Connect using **Validation Rules, Workflow Rules, Process Builder, Approval Processes, and Flows**. Automation reduces manual effort, ensures data accuracy, and provides timely notifications to stakeholders.*
 ---
 
 ## Phase 1: Problem Understanding & Industry Analysis  
@@ -355,5 +356,3 @@ AgriTrust Connect
 
 **Phase 4 is complete** and ready for integration with subsequent phases of the project.
 ```
-
----
