@@ -6,17 +6,18 @@
 
 A Salesforce-powered ecosystem digitizing the agricultural value chain for transparency, sustainability, and profitability. This platform connects smallholder farmers, agronomists, and corporate buyers to build a more efficient and equitable food system.
 
+For detailed technical documentation, please see the `/documentation` folder.
+
 ---
 
 ## Table of Contents
 
 1.  [Problem Statement](#problem-statement)
 2.  [Our Solution](#our-solution)
-3.  [Key Features (Phase 1)](#key-features-phase-1)
+3.  [Key Features](#key-features)
 4.  [Technology Stack](#technology-stack)
 5.  [Getting Started](#getting-started)
-6.  [Repository Structure](#repository-structure)
-7.  [Project Context](#project-context)
+6.  [Project Context](#project-context)
 
 ---
 
@@ -36,7 +37,7 @@ Smallholder farmers, particularly in regions like Anantapur, face significant ch
 
 ---
 
-## Key Features (Phase 1)
+## Key Features
 
 * 🌾 **Farm & Crop Cycle Management:** A 360-degree view of all farms, plots, and activities from sowing to harvest.
 * 📱 **Farmer Mobile Portal:** A simplified Experience Cloud portal for farmers to log activities and view personalized advisories.
@@ -59,7 +60,7 @@ Smallholder farmers, particularly in regions like Anantapur, face significant ch
 
 ## Getting Started
 
-Follow these instructions to get a copy of the project up and running in your own Salesforce environment for development and testing purposes.
+Follow these instructions to get a copy of the project up and running in your own Salesforce environment.
 
 ### Prerequisites
 
@@ -89,86 +90,10 @@ Follow these instructions to get a copy of the project up and running in your ow
     ```bash
     sfdx force:user:permset:assign --targetusername my-dev-org --permsetname Agronomist
     ```
-    *(Note: Permission set names are examples and will be defined during development.)*
+    *(Note: Permission set names will be defined during development.)*
 
 ---
 
 ## Project Context
 
 This project is being developed as part of the **TCS SmartBridge** program. It serves as a practical application of Salesforce development and architecture skills to solve a real-world challenge in the AgriTech sector.
-
-
-
-
-
-
-## Phase 2: Org Setup & Configuration – AgriTrust Connect
-
-This section captures all configuration and org setup tasks completed under Phase 2.
-
----
-
-### Salesforce Dev Org Setup & Connection
-
-- Developer Edition org created, user credentials confirmed  
-- VS Code + Salesforce CLI (SFDX) setup, repo connected to the org
-
----
-
-### Company Profile & Organization Settings
-
-- Company Name: AgriTrust Connect Pvt. Ltd  
-- Default Locale: English (India)  
-- Default Time Zone: (GMT+05:30) IST  
-- Currency: INR  
-
----
-
-### Business Hours & Holidays
-
-- Business Hours: Mon-Sat, 9:00 AM – 6:00 PM  
-- Holidays configured: (list the holidays you added, e.g. Diwali, Independence Day, Pongal, etc.)
-
----
-
-### Fiscal Year
-
-- Standard Fiscal Year used  
-- Fiscal Year start month: April  
-
----
-
-### Users & Licenses
-
-- Admin User created  
-- Farmer user created  
-- Extension Officer user created  
-- Buyer user created  
-
----
-
-### Roles, Profiles & Permission Sets
-
-- Roles established: Admin, Farmer, Extension Officer, Supplier, Buyer, Government Officer  
-- Profiles created: Admin profile (full access), Farmer profile, Extension Officer profile, Buyer profile, Supplier profile  
-- Permission Sets added: “Weather Data Access”, “Financial Data Access”  
-
----
-
-### Security & Access
-
-- Org-Wide Defaults (OWD) set: Farmer records private; Crop/Advisory records (as per parent or restricted)  
-- Sharing rules configured: Farmer records shared with their assigned Extension Officer  
-- Login / password policies: Admin login access, field-level security set for sensitive fields  
-
----
-
-### Dev & Deployment Basics
-
-- Org used for both development & testing (no separate sandbox)  
-- Version control: Setup via GitHub repo  
-- Metadata deployments handled through VS Code + SFDX commands  
-
----
-- ___  
-
