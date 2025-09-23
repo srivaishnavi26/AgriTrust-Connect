@@ -156,14 +156,84 @@ A foundational security model was implemented to protect data.
 * **Field-Level Security (FLS):** Applied to restrict access to sensitive financial fields.  
 
 ---
+## Phase 3: Data Modeling & Relationships  
 
-## Phase 3: Data Modeling & Relationships (Coming Soon)  
+This phase focused on designing the data architecture of AgriTrust Connect. We created custom objects, fields, and relationships to represent the agricultural ecosystem, ensuring scalability and traceability across all farming activities.  
 
-With the foundational org setup complete, the project is ready to proceed to the next phase.  
+### 1. Object Model Design  
 
-Upcoming activities include:  
-* Creating custom objects like `Farmers`, `Farms`, and `Crop Cycles`  
-* Defining object relationships using the Schema Builder  
-* Setting up Record Types and Page Layouts  
+We identified the following **core objects**:  
+
+* **Farmer (Contact - Standard):** Represents individual farmers.  
+  * Custom Fields: Farmer ID (Auto Number), Village, Landholding Size (Number), Phone  
+
+* **Farm (Custom):** Represents farmland owned/managed by a farmer.  
+  * Fields: Farm Name, Location (Text/Geolocation), Size in Acres  
+  * Relationship: Lookup to Farmer (Contact)  
+
+* **Crop Cycle (Custom):** Captures details of each planting season.  
+  * Fields: Crop Name (Picklist), Season (Picklist – Kharif/Rabi), Sowing Date, Harvest Date  
+  * Relationship: Master-Detail to Farm  
+
+* **Soil Record (Custom):** Stores soil health data for each cycle.  
+  * Fields: Nutrient Level, pH Value, Test Date  
+  * Relationship: Master-Detail to Crop Cycle  
+
+* **Advisory (Custom):** Recommendations given to farmers.  
+  * Fields: Advisory Type (Picklist), Message, Date Issued  
+  * Relationship: Lookup to Crop Cycle  
+
+* **Procurement (Custom):** Captures buyer orders.  
+  * Fields: Order Quantity, Price, Order Date  
+  * Relationships: Lookup to Crop Cycle, Lookup to Buyer (Account)  
+
+* **Traceability Ledger (Custom - Optional/Future):** Tracks produce movement from farm to buyer.  
+  * Relationship: Lookup to Procurement, Crop Cycle, and Farm  
 
 ---
+
+### 2. Relationships Defined  
+
+* **Farmer → Farm:** One farmer can own multiple farms (Lookup)  
+* **Farm → Crop Cycle:** One farm can have multiple crop cycles (Master-Detail)  
+* **Crop Cycle → Soil Record:** One cycle can have multiple soil records (Master-Detail)  
+* **Crop Cycle → Advisory:** Multiple advisories linked to one cycle (Lookup)  
+* **Crop Cycle → Procurement:** A crop cycle may generate multiple procurement orders (Lookup)  
+* **Procurement → Buyer (Account):** Each order tied to a buyer (Lookup)  
+
+---
+
+### 3. Page Layouts & Record Types  
+
+* **Page Layouts:**  
+  * Farmer Layout: Simple fields for basic details  
+  * Extension Officer Layout: Full farm, crop, and advisory details  
+  * Buyer Layout: Procurement and traceability records  
+
+* **Record Types:**  
+  * Procurement: Retail vs Corporate orders  
+  * Advisory: Pest Control, Irrigation, Market Pricing  
+
+---
+
+### 4. Compact Layouts  
+
+Compact layouts were set up to improve mobile user experience:  
+
+* **Farmer:** Farmer Name, Village, Phone, Landholding Size  
+* **Crop Cycle:** Crop Name, Season, Sowing Date  
+* **Procurement:** Order Quantity, Order Date, Buyer  
+
+---
+
+### 5. Schema Builder Visualization  
+
+The object model and relationships were mapped in **Salesforce Schema Builder**.  
+This provided a visual confirmation of the data model and will serve as a reference for future phases.  
+
+*(Screenshots will be added here)*  
+
+---
+
+**Phase 3 Completion Status: DONE**  
+ Ready to proceed with **Phase 4: Process Automation**  
