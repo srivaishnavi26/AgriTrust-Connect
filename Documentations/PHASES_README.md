@@ -354,5 +354,89 @@ AgriTrust Connect
 * Procurement approvals are **managed systematically** via Approval Process  
 * Traceability Ledger and advisories are **automatically generated** via Flows  
 
+---
+
+## 3️⃣ Process Builder
+
+### Auto-create Task – Harvest Logged
+* **Object:** Crop_Cycle__c  
+* **Criteria:** Harvest_Date__c changed & not null  
+* **Action:** Create Task  
+  * Subject: `"Harvest Logged – Follow Up"`  
+  * Assigned To: Owner / Agronomist  
+  * Due Date: Harvest_Date__c  
+  * Related To: Crop_Cycle__c record  
+
+---
+
+## 4️⃣ Approval Process
+
+### Buyer Request Approval
+* **Object:** Procurement__c  
+* **Criteria:** Status__c = "Submitted"  
+* **Process Steps:**  
+  1. Submission routed to Agronomist for approval  
+  2. Approval updates record and notifies buyer  
+  3. Rejection updates record and notifies buyer  
+
+---
+
+## 5️⃣ Flow Automations
+
+### Flow 1 – Procurement → Traceability Ledger
+* **Trigger:** Record-created on Procurement__c  
+* **Action:** Create Traceability_Ledger__c record  
+* **Field Mapping:**  
+  * Related Procurement = {!$Record.Id}  
+  * Stage = "Created"  
+  * Movement Date = {!$Flow.CurrentDateTime}  
+
+### Flow 2 – Crop_Cycle → Advisory
+* **Trigger:** Record-created on Crop_Cycle__c  
+* **Decision:** Crop type = Paddy (extendable)  
+* **Action:** Create Advisory__c record  
+* **Field Mapping:**  
+  * Advisory Name = `"Advisory for " & {!$Record.Name}`  
+  * Advisory Date = {!$Flow.CurrentDate}  
+  * Advisory Text = `"Please follow best practices for " & {!$Record.Crop_Name__c}`  
+  * Related Farmer = {!$Record.Related_Farm__c}  
+  * Owner / Office User = Assign to Agronomist  
+
+---
+## Escalation Rules
+
+### Advisory Escalation
+* **Object:** Advisory__c  
+* **Rule Name:** Advisory_Escalation  
+* **Criteria:** Status__c = "Pending"  
+* **Age Over:** 48 hours  
+* **Escalate To:** Extension Officer  
+
+### Procurement Escalation
+* **Object:** Procurement__c  
+* **Rule Name:** Procurement_Escalation  
+* **Criteria:** Status__c = "Submitted"  
+* **Age Over:** 72 hours  
+* **Escalate To:** Procurement Manager  
+
+---
+
+## Scheduled / Time-Based Flows
+
+### Advisory Reminder Flow
+* **Object:** Advisory__c  
+* **Criteria:** Status__c != "Completed"  
+* **Schedule:** Daily at 6 AM  
+* **Action:** Send Email Alert to Farmer  
+
+### Seasonal Alert Flow – Kharif Start
+* **Start Date:** June 15 annually  
+* **Action:** Send Custom Notification to all Farmers  
+
+### Buyer Reminder Flow
+* **Object:** Procurement__c  
+* **Criteria:** Delivery_Date__c = TODAY() + 7  
+* **Action:** Send Email to Buyer  
+
 **Phase 4 is complete** and ready for integration with subsequent phases of the project.
 ---
