@@ -7,44 +7,11 @@ This document provides the full lifecycle of the **AgriTrust Connect** Salesforc
 ## Table of Contents
 
 1.  **[Phase 1: Problem Understanding & Industry Analysis](#phase-1-problem-understanding--industry-analysis)**
-    -   Requirement Gathering
-    -   Stakeholder Analysis
-    -   Business Process Mapping
-    -   Technology & Risks
-    -   Success Metrics & Future Vision
-    -   Phase 1 Outcome
 2.  **[Phase 2: Org Setup & Configuration](#phase-2-org-setup--configuration)**
-    -   Developer Org & DevOps Setup
-    -   Company Profile & Global Settings
-    -   User, Role, & Profile Setup
-    -   Security & Sharing Model
-    -   Phase 2 Outcome
 3.  **[Phase 3: Data Modeling & Relationships](#phase-3-data-modeling--relationships)**
-    -   Object Model Design
-    -   Relationships Defined
-    -   Page Layouts & Record Types
-    -   Compact Layouts
-    -   Schema Builder Visualization
-    -   Phase 3 Outcome
 4.  **[Phase 4: Process Automation (Admin)](#phase-4-process-automation-admin)**
-    -   Validation Rules
-    -   Workflow Rules
-    -   Process Builder
-    -   Approval Processes
-    -   Flow Automations
-    -   Escalation Rules
-    -   Scheduled / Time-Based Flows
-    -   Phase 4 Outcome
 5.  **[Phase 5: Apex Programming (Developer)](#phase-5-apex-programming-developer)**
-    -   Files Created
-    -   Apex Development Goals
-    -   Phase 5 Outcome
 6.  **[Phase 6: User Interface Development](#phase-6-user-interface-development)**
-    -   UI Development Goals
-    -   Lightning App Builder Enhancements
-    -   Lightning Web Components (LWC) Created
-    -   Jest Test Classes
-    -   Phase 6 Outcome
 7.  **[Phase 7: Integration & External Access](#phase-7-integration--external-access)**
 8.  **[Phase 8: Data Management & Deployment](#phase-8-data-management--deployment)**
 9.  **[Phase 9: Reporting, Dashboards & Security Review](#phase-9-reporting-dashboards--security-review)**
@@ -251,7 +218,30 @@ Examples:
 ---
 
 ## Phase 7: Integration & External Access
-*(Placeholder for future work)*
+
+### Integration Goals
+-   Connect AgriTrust Connect with external data sources for data enrichment.
+-   Enable real-time data exchange with external systems (e.g., ERP, Supply Chain).
+-   Expose Salesforce data securely via APIs for authorized external applications.
+
+### Outbound Integrations (Salesforce → External)
+-   **Named Credentials**: Setup for `WeatherAPI` and `MarketPriceAPI` to securely store endpoint URLs and authentication details, eliminating hardcoded values in code.
+-   **Apex Callouts**: Enhanced `WeatherService.cls` to make REST callouts to the weather API. The service fetches rainfall and temperature forecasts to automatically create or update weather-related `Advisory__c` records.
+-   **Platform Events**: Defined a `Procurement_Order_Event__e` platform event. This event is published via an Apex trigger on the `Procurement__c` object to notify external ERP and supply chain systems of new orders in real-time.
+
+### Inbound Integrations (External → Salesforce)
+-   **Apex REST Service**: Developed an Apex REST class (`ProcurementAPI`) to expose `Procurement__c` data. External systems can now retrieve specific procurement records via a secure GET request to a custom endpoint (e.g., `/services/apexrest/procurements/{recordId}`).
+
+### Data Virtualization (Salesforce Connect)
+-   **External Objects**: Configured Salesforce Connect with an OData adapter to create an External Object, `GovtSubsidy__x`. This allows users to view, search, and report on a government subsidy database directly within Salesforce without data replication.
+
+### Security & Governance
+-   **Remote Site Settings**: Configured to authorize callout endpoints for the Weather and Market Price APIs.
+-   **Authentication**: Implemented the OAuth 2.0 protocol for secure server-to-server authentication with trusted external systems.
+-   **API Limit Monitoring**: Established monitoring and alert mechanisms for daily API call limits to ensure system stability and prevent service disruptions.
+
+### Phase 7 Outcome
+*Successfully connected Salesforce with external systems for both inbound and outbound data flow, enabling real-time data enrichment and process synchronization.*
 
 ---
 
