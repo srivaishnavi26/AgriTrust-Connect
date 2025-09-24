@@ -1,0 +1,21 @@
+public class ProcurementProcessor implements Queueable {
+    private List<Id> procurementIds;
+
+    public ProcurementProcessor(List<Id> procIds) {
+        this.procurementIds = procIds;
+    }
+
+    public void execute(QueueableContext context) {
+        if (procurementIds == null || procurementIds.isEmpty()) {
+            return;
+        }
+
+        List<Procurement__c> procs = [
+            SELECT Id, Name
+            FROM Procurement__c
+            WHERE Id IN :procurementIds
+        ];
+
+        ProcurementTriggerHandler.handleAfterInsert(procs);
+    }
+}

@@ -1,0 +1,10 @@
+global class SeasonalAlertScheduler implements Schedulable {
+    global void execute(SchedulableContext sc) {
+        List<Contact> farmers = [
+            SELECT Id, Email FROM Contact WHERE Level__c = 'Primary'
+        ];
+        for (Contact farmer : farmers) {
+            System.debug('Send seasonal alert to: ' + farmer.Email);
+        }
+    }
+}

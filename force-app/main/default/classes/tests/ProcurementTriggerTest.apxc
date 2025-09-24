@@ -1,0 +1,19 @@
+@isTest
+public class ProcurementTriggerTest {
+    @isTest static void testLedgerCreation() {
+        Procurement__c proc = new Procurement__c(Name = 'Test Procurement');
+        
+        Test.startTest();
+        insert proc;
+        Test.stopTest();
+
+        List<Traceability_Ledger__c> ledgers = [
+            SELECT Name, Stage__c, Related_Procurement__c 
+            FROM Traceability_Ledger__c 
+            WHERE Related_Procurement__c = :proc.Id
+        ];
+
+        System.assertEquals(1, ledgers.size());
+        System.assertEquals('Created', ledgers[0].Stage__c);
+    }
+}

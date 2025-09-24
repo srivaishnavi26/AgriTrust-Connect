@@ -1,0 +1,53 @@
+@isTest
+public class FarmManagementHandlerTest {
+    
+    @isTest static void testCalculateExpectedYield_Paddy() {
+        Farm__c farm = new Farm__c(Name = 'Test Farm', Size_in_Acres__c = 10);
+        Decimal yield = FarmManagementHandler.calculateExpectedYield(farm, 'Paddy');
+        System.assertEquals(250, yield, 'Yield for Paddy should be correct.');
+    }
+
+    @isTest static void testCalculateExpectedYield_Wheat() {
+        Farm__c farm = new Farm__c(Name = 'Test Farm', Size_in_Acres__c = 10);
+        Decimal yield = FarmManagementHandler.calculateExpectedYield(farm, 'Wheat');
+        System.assertEquals(200, yield, 'Yield for Wheat should be correct.');
+    }
+
+    @isTest static void testCalculateExpectedYield_UnknownCrop() {
+        Farm__c farm = new Farm__c(Name = 'Test Farm', Size_in_Acres__c = 10);
+        Decimal yield = FarmManagementHandler.calculateExpectedYield(farm, 'Maize');
+        System.assertEquals(0, yield, 'Unknown crop should yield 0.');
+    }
+
+    @isTest static void testCalculateExpectedYield_NullSize() {
+        Farm__c farm = new Farm__c(Name = 'Test Farm', Size_in_Acres__c = null);
+        Decimal yield = FarmManagementHandler.calculateExpectedYield(farm, 'Paddy');
+        System.assertEquals(0, yield, 'Null size should yield 0.');
+    }
+
+    @isTest static void testCalculateExpectedYield_ZeroSize() {
+        Farm__c farm = new Farm__c(Name = 'Test Farm', Size_in_Acres__c = 0);
+        Decimal yield = FarmManagementHandler.calculateExpectedYield(farm, 'Paddy');
+        System.assertEquals(0, yield, 'Zero size should yield 0.');
+    }
+
+    @isTest static void testValidateSoilRecord_Valid() {
+        Soil_Record__c soil = new Soil_Record__c(pH__c = 7);
+        System.assert(FarmManagementHandler.validateSoilRecord(soil), 'Valid pH should return true.');
+    }
+
+    @isTest static void testValidateSoilRecord_NullPH() {
+        Soil_Record__c soil = new Soil_Record__c(pH__c = null);
+        System.assert(!FarmManagementHandler.validateSoilRecord(soil), 'Null pH should return false.');
+    }
+
+    @isTest static void testValidateSoilRecord_NegativePH() {
+        Soil_Record__c soil = new Soil_Record__c(pH__c = -1);
+        System.assert(!FarmManagementHandler.validateSoilRecord(soil), 'Negative pH should return false.');
+    }
+
+    @isTest static void testValidateSoilRecord_TooHighPH() {
+        Soil_Record__c soil = new Soil_Record__c(pH__c = 15);
+        System.assert(!FarmManagementHandler.validateSoilRecord(soil), 'pH above 14 should return false.');
+    }
+}

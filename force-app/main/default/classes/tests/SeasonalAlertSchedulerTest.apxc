@@ -1,0 +1,16 @@
+@isTest
+public class SeasonalAlertSchedulerTest {
+    @isTest static void testScheduler() {
+        Test.startTest();
+        String cronExp = '0 0 0 ? * MON *';
+        System.schedule('Test Seasonal Alert', cronExp, new SeasonalAlertScheduler());
+        Test.stopTest();
+
+        List<CronTrigger> jobs = [
+            SELECT Id, CronExpression, CronJobDetail.Name
+            FROM CronTrigger
+            WHERE CronJobDetail.Name = 'Test Seasonal Alert'
+        ];
+        System.assert(!jobs.isEmpty());
+    }
+}

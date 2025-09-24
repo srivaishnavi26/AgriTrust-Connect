@@ -1,0 +1,29 @@
+@isTest
+public class ProcurementProcessorTest_Extra {
+	
+    @isTest static void testMultipleProcurements() {
+        List<Procurement__c> procs = new List<Procurement__c>{
+            new Procurement__c(Name = 'Procurement A'),
+            new Procurement__c(Name = 'Procurement B'),
+            new Procurement__c(Name = 'Procurement C')
+        };
+        insert procs;
+
+        Test.startTest();
+        System.enqueueJob(new ProcurementProcessor(new List<Id>{
+            procs[0].Id, procs[1].Id, procs[2].Id
+        }));
+        Test.stopTest();
+
+        List<Traceability_Ledger__c> ledgers = [
+            SELECT Id, Stage__c, Related_Procurement__c
+            FROM Traceability_Ledger__c
+            WHERE Related_Procurement__c IN :procs
+        ];
+
+        System.assertEquals(3, ledgers.size(), 'Should create one ledger per procurement.');
+        for (Traceability_Ledger__c l : ledgers) {
+            System.assertEquals('Created', l.Stage__c, 'Stage should be Created.');
+        }
+    }
+}

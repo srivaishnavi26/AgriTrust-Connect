@@ -1,0 +1,10 @@
+@isTest
+public class SearchUtilityTest {
+    @isTest static void testSearchContacts() {
+        Contact c = new Contact(LastName='FarmerTest', Email='test@example.com');
+        insert c;
+
+        List<Contact> results = SearchUtility.searchContacts('FarmerTest');
+        System.assert(!results.isEmpty(), 'Search should return the inserted contact.');
+    }
+}

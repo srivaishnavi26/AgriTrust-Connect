@@ -1,0 +1,13 @@
+public class WeatherService {
+    @future(callout=true)
+    public static void fetchWeatherAsync(String location) {
+        System.debug('Fetching weather for: ' + location);
+
+        Weather__c weather = new Weather__c(
+            Name = 'Weather for ' + location,
+            Location__c = location
+        );
+
+        insert weather;
+    }
+}

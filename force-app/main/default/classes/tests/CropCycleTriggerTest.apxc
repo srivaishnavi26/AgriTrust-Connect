@@ -1,0 +1,18 @@
+@isTest
+public class CropCycleTriggerTest {
+    @isTest static void testInvalidDates() {
+        Crop_Cycle__c cycle = new Crop_Cycle__c(
+            Name = 'Test Paddy',
+            Sowing_Date__c = Date.today(),
+            Harvest_Date__c = Date.today().addDays(-5)
+        );
+
+        Test.startTest();
+        try {
+            insert cycle;
+        } catch (DmlException e) {
+            System.assert(e.getMessage().contains('Harvest Date cannot be before Sowing Date.'));
+        }
+        Test.stopTest();
+    }
+}

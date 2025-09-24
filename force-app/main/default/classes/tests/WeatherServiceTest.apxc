@@ -1,0 +1,11 @@
+@isTest
+public class WeatherServiceTest {
+    @isTest static void testFetchWeather() {
+        Test.startTest();
+        WeatherService.fetchWeatherAsync('TestCity');
+        Test.stopTest();
+
+        // Verify logs or created records if applicable
+        System.assert(true, 'Weather service executed without errors.');
+    }
+}

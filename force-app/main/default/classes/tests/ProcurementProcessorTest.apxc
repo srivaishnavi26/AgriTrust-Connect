@@ -1,0 +1,74 @@
+@isTest
+public class ProcurementProcessorTest {
+
+    @isTest static void testQueueableProcessingWithValidProc() {
+        // Create valid Procurement__c
+        Procurement__c proc = new Procurement__c(
+            Name = 'Test Procurement',
+            ID = 'Test Value' // Replace with actual required fields
+        );
+        insert proc;
+
+        List<Id> ids = new List<Id>{proc.Id};
+
+        Test.startTest();
+        System.enqueueJob(new ProcurementProcessor(ids));
+        Test.stopTest();
+
+        List<Traceability_Ledger__c> ledgers = [
+            SELECT Id, Stage__c, Related_Procurement__c 
+            FROM Traceability_Ledger__c 
+            WHERE Related_Procurement__c = :proc.Id
+        ];
+        System.assertEquals(1, ledgers.size(), 'Ledger should be created.');
+        System.assertEquals('Created', ledgers[0].Stage__c, 'Ledger should have stage Created.');
+    }
+
+    @isTest static void testEmptyIdList() {
+        Test.startTest();
+        System.enqueueJob(new ProcurementProcessor(new List<Id>()));
+        Test.stopTest();
+
+        System.assertEquals(0, [SELECT COUNT() FROM Traceability_Ledger__c]);
+    }
+
+    @isTest static void testNullIdList() {
+        Test.startTest();
+        System.enqueueJob(new ProcurementProcessor(null));
+        Test.stopTest();
+
+        System.assertEquals(0, [SELECT COUNT() FROM Traceability_Ledger__c]);
+    }
+
+    @isTest static void testIdNotFound() {
+        Id fakeId = '001000000000000AAA'; // valid but non-existent Id
+
+        Test.startTest();
+        System.enqueueJob(new ProcurementProcessor(new List<Id>{fakeId}));
+        Test.stopTest();
+
+        System.assertEquals(0, [SELECT COUNT() FROM Traceability_Ledger__c]);
+    }
+
+    @isTest static void testMultipleIdsIncludingValidAndInvalid() {
+        Procurement__c proc = new Procurement__c(
+            Name = 'Multiple Test Procurement',
+            ID = 'Test Value'
+        );
+        insert proc;
+
+        Id fakeId = '001000000000000AAA';
+        List<Id> mixedIds = new List<Id>{proc.Id, fakeId};
+
+        Test.startTest();
+        System.enqueueJob(new ProcurementProcessor(mixedIds));
+        Test.stopTest();
+
+        List<Traceability_Ledger__c> ledgers = [
+            SELECT Id, Stage__c, Related_Procurement__c 
+            FROM Traceability_Ledger__c 
+            WHERE Related_Procurement__c = :proc.Id
+        ];
+        System.assertEquals(1, ledgers.size());
+    }
+}
