@@ -33,7 +33,7 @@ public with sharing class WeatherService {
                     Name = 'Heavy Rainfall Forecast',
                     Crop_Cycle__c = cropCycleId,
                     Type__c = 'Irrigation', // This must be a valid picklist value on your object
-                    Message__c = 'Heavy rainfall of ' + rainfall + 'mm is expected. Adjust irrigation schedule accordingly.'
+                    Advisory_Text__c = 'Heavy rainfall of ' + rainfall + 'mm is expected. Adjust irrigation schedule accordingly.'
                 );
                 insert newAdvisory;
             }

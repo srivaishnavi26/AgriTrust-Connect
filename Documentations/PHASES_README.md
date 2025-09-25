@@ -262,7 +262,19 @@ Examples:
 ---
 
 ## Phase 9: Reporting, Dashboards & Security Review
-*(Placeholder for future work)*
+
+### Reports & Analytics
+-   **Custom Report Types**: Created necessary **Custom Report Types** for `Procurement` and `Crop Cycle` objects to enable robust analytics.
+-   **Operational Reports**: Built key reports to provide business insights, including a **Summary Report** (`Crop Cycles by Season`) and a **Matrix Report** (`Procurements by Buyer and Crop`).
+-   **Dynamic Dashboards**: Developed an **`Extension Officer Dashboard`** with multiple components (charts, tables) to visualize key metrics. Configured it as a **Dynamic Dashboard** to show data relevant to the logged-in user.
+
+### Security & Access Review
+-   **Sharing Model Verification**: Reviewed and confirmed the **Organization-Wide Defaults (OWD)** to ensure a secure baseline of `Private` for `Contact` records.
+-   **Field-Level Security (FLS) Audit**: Audited **Field-Level Security** for key profiles (e.g., Buyer) to restrict access to sensitive or internal-only fields.
+-   **Session & Login Policies**: Hardened system access by reviewing **Session Settings** and configuring **Login IP Ranges** for the System Administrator profile.
+
+### Phase 9 Outcome
+*The application is now equipped with powerful analytics for key stakeholders, and its security posture has been verified and strengthened, making it ready for final review.*
 
 ---
 
