@@ -246,7 +246,18 @@ Examples:
 ---
 
 ## Phase 8: Data Management & Deployment
-*(Placeholder for future work)*
+
+### Data Migration & Management
+-   **Data Import**: Utilized the **Data Import Wizard** for initial import of Farmer (Contact) records and the **Salesforce Data Loader** for bulk `Upsert` operations on Procurement data.
+-   **Data Quality**: Implemented a **Duplicate Rule** on the Contact object, leveraging a custom **Matching Rule** to block the creation of new records with identical `Phone` numbers, ensuring data integrity.
+-   **Data Backup**: Configured the **Data Export Service** to perform automated weekly backups of all organization data, establishing a disaster recovery plan.
+
+### Deployment & Environment Strategy
+-   **Sandbox Usage**: A **Developer Sandbox** was used as the primary environment for all development, configuration, and testing activities.
+-   **Deployment Method**: The deployment pipeline was managed via **VS Code and the Salesforce CLI (SFDX)**. The `sf project deploy start` command was used to successfully deploy all custom metadata from the local source repository to the Salesforce org.
+
+### Phase 8 Outcome
+*Successfully established a complete data management lifecycle and a modern deployment process, making the application ready for user acceptance testing.*
 
 ---
 
