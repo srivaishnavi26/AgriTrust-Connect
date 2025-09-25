@@ -279,6 +279,6 @@ Examples:
 ---
 
 ## Phase 10: Final Presentation & Demo Day
-*(Placeholder for future work)*
+*Prepared Final report, presentation and a video demo.*
 
 ---
